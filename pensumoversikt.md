@@ -36,12 +36,13 @@ Kan variere med hvordan vi måler størrelse.
 ### $A_4$ Kunne definere og bruke asymptotisk notasjon $O,\Omega, \Theta, o$ og $\omega$.
 - Asymptotisk notasjon beskriver effektiviteten til en algoritme når input størrelsen er stor nokk til at kunn vekstfaktoren av kjøretid er relevant.  
 
-Tenk
+    Tenk
 
-        O(n) vs O(n!)
-    ikke
+            O(n) vs O(n!)
+        ikke    
 
-        O(an) vs O(bn!)
+            O(an) vs O(bn!)
+        
     $\rightarrow$ ser ikk på konstantene $a,b$.
 
 - Generelt er en algoritme som er asymptotisk mer effektiv, et bedre valg for alle input størrelser, bortset fra noen få tilfeller.  
@@ -185,7 +186,7 @@ Sortere en sekvens med tall slik at de er i en monotont stigende rekkefølge.
     $a_1^* \leq a_2^* \leq \dotsc \leq a_n^*$.
 
 #### $Z_2$ Kjenne til eventuelle tileggskrav den stiller for å være korrekt.
-Ingen spesielle tillegskrav, kunn sammenlignbarhet av elementene.
+- Ingen spesielle tillegskrav, kunn sammenlignbarhet av elementene.
 
 #### $Z_3$ Vite hvordan den oppfører seg; kunne utfør algoritmen, trinn for trinn.
 Bygger opp den sorterte sekvensen et element om gangen.
@@ -298,4 +299,128 @@ Lenked lister er en datastruktur som består av noder, der hver node inneholder 
 
         Dette innebærer å opprette en ny node, sette inn den nye noden på riktig sted ved å oppdatere pekere, og dermed justere rekkefølgen av nodene i listen.
             
-                
+            LIST-INSERT(L,   x, pos)
+            1.  new_node = Node(x)           // Opprett en ny node med datafelt x
+            2.  if pos == 1                  
+            3.      new_node.next = L.start_node // Sett inn den nye noden som startnoden
+            4.      L.start_node = new_node
+            5.  else
+            6.      prev_node = L.start_node
+            7.      for i in range(1, pos - 1)  // Finn noden på posisjon pos-1
+            8.          if prev_node is not None
+            9.              prev_node = prev_node.next
+            10.     if prev_node is not None    // Hvis noden på posisjon pos-1 eksisterer
+            11.         new_node.next = prev_node.next // Sett inn den nye noden i mellom
+            12.         prev_node.next = new_node
+
+    - LIST-DELETE  
+    Brukes til å slette en node på en sesifisert posisjon i listen.
+
+    Dette innebærer å justere pekere for å hoppe over den noden som skal slettes, og dermed fjerne noden fra listen.
+        
+            LIST-DELETE(L, pos)
+            1. if pos == 1
+            2.     if L.start_node is not None
+            3.         deleted_node = L.start_node  // Lagre referansen til noden som skal slettes
+            4.         L.start_node = L.start_node.next  // Oppdater startnoden til neste node
+            5.         deleted_node.next = None  // Frigjør pekeren til slettet node
+            6.     else
+            7.         // Handle feil: Slette fra en tom liste
+            8. else
+            9.     prev_node = L.start_node
+            10.    for i in range(1, pos-1)   // Finn noden på posisjon pos-1
+            11.        if prev_node is not None:
+            12.            prev_node = prev_node.next
+            13.    if prev_node is not None and prev_node.next is not None   // Hvis noden på posisjon pos-1 og pos eksisterer
+            14.        deleted_node = prev_node.next  // Lagre referansen til noden som skal slettes
+            15.        prev_node.next = prev_node.next.next  // Oppdater pekerne for å hoppe over slettet node
+            16.        deleted_node.next = None  // Frigjør pekeren til slettet node
+
+- Kjøretider
+    - Innsetting på starten -- $O(1)$
+    - Insetting på slutten -- $O(n)$
+    - Oppslag -- $O(n)$
+    - slette element -- oppslagstid $+$ $O(1)$
+
+### [$B_3$] Forstå hvordan direkte adressering og hashtabeller fungerer
+#### Direkte adressering
+- Nøkkel $=$ indeks  
+- Works well when the universe U of keys is reasonably small.
+
+Engentlig bare en "myk start" på hashing.
+Vi har en verdi $k$ som vi bruker som nøkkel i en oppslagstabell.
+Direkte adressering er å bare bruke $k$ som indeks, direkte. 
+![alt text](./pensum_img/direkte_adressering.png)
+
+Every slot in an array is directly accessible by key as the index. This approach works well as long as we have enough memory available.
+If $U$ is large or infinite, then the array of size $|U|$ may be impractical or even impossible. 
+Furthermore, if the set of used keys stored is small relative to the universe of possible keys is small, then most of the space allocated for the array would be wasted. 
+![alt text](./pensum_img/direct_addressing_hash.JPG)    
+    In situations were we use just a small portion of all keys in the universe, hash tables are a better solution.
+
+
+#### Hashtabeller
+Modifisert nøkkel er indeks
+
+A hash table is an effective data structure for implementing dictionaries. 
+Note in the worst case a hast table can take as long as searching for an element in a linked list ($\Theta (n)$). 
+However in practice, hashing performs extremely well ($O(1)$).
+
+- When to use a hash table?  
+When the number of keys actually stored is small relative to the total number of possible keys.
+
+- Key concept  
+Instead of fusing a key as an array index directly, we ***compute*** the array index from the key. Array indices are computed form keys using hash functions.
+
+        index = h(key)      
+
+    This means we are directly addressing into an ordinary array, which takes advantage of the $O(0)$ access time for any array element.
+The hash function reduces the range of array indices and hence the size of the array.
+Instead of an array of size \textit{|all possible keys|}, the array would need to contain all slots that correspond to the mapping from all possible keys to the hash function of all possible keys.
+Note the mapping is surjective, but not injective.
+
+- Notation  
+We say that an element with key $k$ ***hashes*** to slot $h(k)$, and we also say that $h(k)$ is the ***hash value*** of key $k$.
+
+
+- Hash tables  
+When the set $K$ of keys stored in a dictionary is much smaller than the universe $U$ of all possible keys, a hash table requires much less storage than a direct address table.  
+Hash tables require just $\Theta(|K|)$ storage while maintaining the benefit that searching for an element in still requires only $O(1)$ time. 
+Note $O(1)$ only holds for the $average-case$ time, whereas for direct addressing it holds for the $worst-case$ time.
+
+    We use a \textit{hash function $h$} to compute the slot number from the key $k$, so that the element goes into slot $h(k)$.
+In other words, the function $h$ maps the universe $U$ of keys into the slots of a hash table $T$. 
+
+    $h: U \rightarrow T$
+
+    Note $h$ is surjective, but not injective: all keys in $U$ map to $T$, but different keys in $U$ can map to the same slot in $T$.
+Resulting in the size of the hash table is typically much less then $|U|$.
+
+    Because $h$ is not injective different keys in $U$ can be mapped to the same slot in $T$.
+This would cause a \textit{collision}.
+Which means we need to define the mapping $h$ such that we resolve the conflict created by collisions.
+Note: it is impossible to avoid altogether, since the basis of hashing is to reduce the number of indices needed in table $T$.  
+ ![alt text](./pensum_img/hash_mapping.JPG)    
+
+- Hash function  
+An "ideal" hashing function $h$ would have, for each possible input $k$ in the domain $U$, an output $h(k)$ that is an element randomly and independently chosen from the range of slots in $T$.
+Once a value $h(k)$ is randomly chosen, each subsequent call to $h$ with the same input $k$ yields the same output $h(k)$.
+Such an ideal hash function is called an \textit{independent uniform hash function}, and is an ideal theoretical abstraction, but can not reasonably be implemented in practice. 
+
+### [$B_4$] Forstå konfliktløsing ved kjeding (chaining)
+Resolution by chaining is a useful practical approximation of the ideals of ***independent uniform hash functions***.  
+
+Instead of the hash function determining the array slot, it instead maps the key to a subset using the hash function.
+Each subset is managed independently as a list. 
+  ![alt text](./pensum_img/collision_resolution_chaining.JPG)        
+
+
+- Time complexity  
+The worst-case behavior of hashing with chaining is terrible $\rightarrow$ $\Theta(n)$ plus the time to compute the hash function.
+Searching takes constant time on average. 
+
+### [$B_5$] Kjenne til grunnleggende *hashfunksjoner*
+For designing a hash function it's useful to know the distribution of the keys.
+A good hash function satisfies (approximately) the assumption of independent uniform hashing: each key is equally likely to hash to any of the slots, independently of where any other key has been hashed to. 
+
+            
