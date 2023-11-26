@@ -238,3 +238,64 @@ Etter siste iterasjon $i = n$, er hele listen sorert, og invariantene holder.
 |$\Omega(n)$|$\Theta(n²)$|$O(n²)$|
 
 
+## Forelesning 2. Datastrukturer
+
+For å unngå grunnleggende kjøretidsfeller er det viktig å kunne organisere og strukturere data fornuftig.
+Her skal vi se på hvordan enkle strukturer kan implementeres i praksis, og hv vi vinner på å bruke dem i algoritmene våre.
+
+### [$B_1$] Forstå hvordan stakker og køer fungerer 
+
+#### Stakker
+Kun adgang øverst. 
+
+![alt text](./pensum_img/stack.webp)
+
+- STACK-EMPTY  
+Denne funksjonen sjekker om stacken er tom.
+- PUSH  
+Brukes for å legge til et element på toppen av stacken.
+- POP  
+Brukes for å fjerne og returnere elementet på toppen av stacken.
+
+#### Køer
+Først inn, først ut. 
+
+![alt text](./pensum_img/Data_Queue.svg)
+
+- ENQUEUE  
+Brukes for å legge til et element i slutten av køen.
+- DEQUEUE  
+Brukes for å fjerne og returnere elementet først i køen.
+
+
+### [$B_2$] Forstå hvordan lenkede lister fungerer
+Lenked lister er en datastruktur som består av noder, der hver node inneholder en data-del go en peker til den neste noden i listen. Se figur under.
+
+![alt text](./pensum_img/linked_list.png)
+- Består av "noder", som peker på neste (og kanskje forrige)
+- Tar lineær tid å slå opp på en gitt posisjon
+- Tar konstant tid å sette inn/slette elementer
+- Funksjoner
+    - LIST-SEARCH  
+    Brukest til å finne en node i listen som inneholder et spesifikt søkeelement.
+
+            LIST-SEARCH(L, k)
+                1. current_node = L.start_node      // start fra begynnelsen av listen
+                2. while current_node != NIL and current_node.data != k
+                3.      current_node = current_node.next
+                4. return current node
+
+    - LIST-PREPEND  
+    Brukes til å legge til et nytt element i begynnelsen av listen.
+
+            LIST-PREPEND(L, x)
+                1. new_node = Node(x)           // Opprett en ny node med datafelt x
+                2. new_node.next = L.start_node // Sett pekeren til den nye noden til nåværend start_node
+                3. L.start_node = new_node      // Oppdater startnoden til den nye noden
+
+    - LIST-INSERT  
+    Brukes til å sette inn et nytt element på en spesifisert posisjon i listen.
+
+        Dette innebærer å opprette en ny node, sette inn den nye noden på riktig sted ved å oppdatere pekere, og dermed justere rekkefølgen av nodene i listen.
+            
+                
