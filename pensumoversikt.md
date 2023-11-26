@@ -47,20 +47,20 @@ Tenk
                     0 <= f(n) <= cg(n) for all n >= n_0}
     Eksempel:  
     Figuren viser at $n²$ er en øvre grense for funksjonen $O(n²)$, om  vi skalerer grensen som vi vil, og velger en høy nokk n.
-    ![alt text](/home/johannes/NTNU/2023H/AlgDat/AlgDat_pensum/pensum_img/o_n.png)
+    ![alt text](./pensum_img/o_n.png)
     Den sentrale egenskapen er at $O(n²)$ ligger under $cn²$ for store verdier av $n$.
 
 - $\Theta$ - notation  
 Brukes til å angi at funksjonen er bunnet, altså har samme vekstfaktor for øvre og nedre grense, men med ulike skalerings faktorer.   
 Eksempel: $n²$
-    ![alt text](/home/johannes/NTNU/2023H/AlgDat/AlgDat_pensum/pensum_img/theta_n.png)  
+    ![alt text](./pensum_img/theta_n.png)  
     Sentralt er at $\Theta (n²)$ ligger mellom $c_2n²$ og $c_1n²$ for store $n$.  
     En anne måte å formulere det på er at funksjonen likker mellom to skaleringer av samme kurve.
 
 - $\Omega$- notation  
 $\Omega$ brukes for å angi nedre grense for store $n$.  
 Eksempel: $n²$  
-    ![alt text](/home/johannes/NTNU/2023H/AlgDat/AlgDat_pensum/pensum_img/omega_n.png)
+    ![alt text](./pensum_img/omega_n.png)
 
 - Eksempel på bruk av ssymptotisk notasjon  
 $O(n^a) + \Omega (n^b) + \Theta(n^c) = \Omega (n^b + n^c)$  
