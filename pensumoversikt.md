@@ -408,6 +408,8 @@ Once a value $h(k)$ is randomly chosen, each subsequent call to $h$ with the sam
 Such an ideal hash function is called an \textit{independent uniform hash function}, and is an ideal theoretical abstraction, but can not reasonably be implemented in practice. 
 
 ### [$B_4$] Forstå konfliktløsing ved kjeding (chaining)
+OM to verdier hasher til samme indeks, så har vi en kollisjon; for å ta vare på begge verdiene, kan vi ha en lenket lisete i hver celle i tabbelen.
+
 Resolution by chaining is a useful practical approximation of the ideals of ***independent uniform hash functions***.  
 
 Instead of the hash function determining the array slot, it instead maps the key to a subset using the hash function.
@@ -423,4 +425,26 @@ Searching takes constant time on average.
 For designing a hash function it's useful to know the distribution of the keys.
 A good hash function satisfies (approximately) the assumption of independent uniform hashing: each key is equally likely to hash to any of the slots, independently of where any other key has been hashed to. 
 
-            
+- Multiply-shift method
+
+### [$B_6$] Kjenne til perfekt hashing, som for statiske datasett har worst-case $O(1)$ for søk
+Ved bruk av ***perfekt hashing*** unngår vi alle kollisjoner.  
+
+Vi kan bruke perfekt hashing når vi har kunnskap om alle nøklene på forhånd (***statisk datasett***) og kan dermed lage en skreddersydd hshfunksjon.
+Det betyr at vi kan garantere konstant kjøretid (***worst-case $O(1)$***).
+
+### [$B_7$] Kunne definere amortisert analyse
+I stedet for å fokusere på den verste enkeltoperasjonen, ser amortisert analyse på den gjennomsnittlige kostnaden oever et sett med operasjoner.
+
+For eksempel, hvis du har en sekvens med operasjoner der noen av dem er dyre, men de er fulgt av en rekke enklere operasjoner,
+kan amortisert analyse gi en bedre forståelse av den gjennomsnittlige ytelsen.
+Det vanligste tilfellet er når noen operasjoner tar mye ***av og til***, men de blir fulgt av en rekke raske opersjoner.
+
+Amortisert analyse granterer ***average performance of each operation in the worst case***. 
+
+### [$B_8$] Forstå aggregert analyse
+
+
+
+
+
